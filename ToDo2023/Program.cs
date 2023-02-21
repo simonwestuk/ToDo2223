@@ -1,7 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using ToDo2023.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<AppDbContext>(option => option.UseSqlServer(connectionString));
+
 
 var app = builder.Build();
 
