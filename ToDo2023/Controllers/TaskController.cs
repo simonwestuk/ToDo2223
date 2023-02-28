@@ -79,6 +79,19 @@ namespace ToDo2023.Controllers
             }
             return View(task);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var task = await _db.Tasks.FindAsync(id); if (task == null)
+            {
+                return NotFound();
+            }
+            _db.Tasks.Remove(task);
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
         
