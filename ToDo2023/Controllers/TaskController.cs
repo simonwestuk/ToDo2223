@@ -92,6 +92,27 @@ namespace ToDo2023.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ToggleComplete(int? id)
+        {
+            if (id == null) 
+            {
+                return NotFound();
+            }
+
+            var task = await _db.Tasks.FindAsync(id);
+
+            if (task == null) 
+            {
+                return NotFound();
+            }
+
+            task.Completed = !task.Completed;
+            _db.Update(task);
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
         
