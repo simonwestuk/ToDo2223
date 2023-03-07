@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ToDo2023.Data;
+using ToDo2023.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(option => option.UseSqlServer(connectionString));
-
+builder.Services.AddSingleton<UserModel>();
 
 var app = builder.Build();
 

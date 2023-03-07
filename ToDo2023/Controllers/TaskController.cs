@@ -8,14 +8,20 @@ namespace ToDo2023.Controllers
     public class TaskController : Controller
     {
         private readonly AppDbContext _db;
-        public TaskController(AppDbContext db)
+        private readonly UserModel _user;
+        public TaskController(AppDbContext db, UserModel user)
         {
             _db = db;
+            _user = user;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            if (_user == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             var tasks = await _db.Tasks.ToListAsync();
             return View(tasks);
         }
